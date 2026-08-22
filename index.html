@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Shooter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="passwordGate">
+        <form id="passwordForm">
+            <label for="passwordInput">Enter password</label>
+            <input id="passwordInput" type="password" autocomplete="off" required>
+            <button type="submit">Unlock</button>
+            <p id="passwordMessage" role="alert" aria-live="polite"></p>
+        </form>
+    </div>
+    <div id="gameContainer" style="display: none;">
+        <div id="gameCanvas"></div>
+        <div id="mobileControls" class="mobile-controls">
+            <div class="mobile-dpad">
+                <button id="mobileUp" class="mobile-button mobile-dir">↑</button>
+                <div class="mobile-row">
+                    <button id="mobileLeft" class="mobile-button mobile-dir">←</button>
+                    <button id="mobileDown" class="mobile-button mobile-dir">↓</button>
+                    <button id="mobileRight" class="mobile-button mobile-dir">→</button>
+                </div>
+            </div>
+            <button id="mobileShoot" class="mobile-button mobile-shoot">Shoot</button>
+        </div>
+        <div id="ui">
+            <div id="scoreContainer">
+                <div id="score">Score: 0</div>
+                <div id="health">Health: <span id="healthValue">100</span></div>
+                <div id="level">Level: <span id="levelValue">1</span></div>
+                <div id="coins">Coins: <span id="coinsValue">0</span></div>
+            </div>
+            <button id="settingsBtn" onclick="toggleSettings()">⚙️ Settings</button>
+        </div>
+        <div id="gameOver" style="display: none;">
+            <h1>Game Over!</h1>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <button onclick="playAgain()">Play Again</button>
+        </div>
+        <div id="settingsModal" style="display: none;">
+            <h2>Settings</h2>
+            <div class="settingsNav">
+                <button class="navTab" id="settingsTab1" onclick="showSettingsPage(1)">Controls (Arrows)</button>
+                <button class="navTab" id="settingsTab2" onclick="showSettingsPage(2)">Controls (WASD)</button>
+                <button class="navTab" id="settingsTab3" onclick="showSettingsPage(3)">Mobile Controls</button>
+            </div>
+            <div class="settingsContent">
+                <div class="settingsPage" id="settingsPage1">
+                    <button id="soundToggleBtn" class="settingOption" onclick="toggleSound()">
+                        <span id="soundIcon">🔊</span> Sound: ON
+                    </button>
+                    <div style="margin-top:8px;">
+                        <button class="settingOption" id="pressArrowsButton" onclick="onPressArrowControls()">Use Arrows</button>
+                    </div>
+                    <p class="controlsInfo">
+                        <strong>Controls:</strong><br>
+                        ← → Up Down: Move<br>
+                        Spacebar: Shoot<br>
+                        M: Fire Grenade (if equipped)
+                    </p>
+                </div>
+                <div class="settingsPage" id="settingsPage2" style="display:none">
+                    <p class="controlsInfo">
+                        <strong>Controls:</strong><br>
+                        W A S D: Move<br>
+                        Click: Shoot
+                    </p>
+                    <div style="margin-top:8px;">
+                        <button class="settingOption" id="pressButton" onclick="onPressButton()">Press</button>
+                    </div>
+                </div>
+                <div class="settingsPage" id="settingsPage3" style="display:none">
+                    <p class="controlsInfo">
+                        <strong>Mobile Controls:</strong><br>
+                        This activates touch-based mobile movement and shoot buttons during gameplay.
+                    </p>
+                    <div style="margin-top:8px;">
+                        <button class="settingOption" id="pressMobileButton" onclick="onPressMobileControls()">Press</button>
+                    </div>
+                </div>
+            </div>
+            <button class="closeBtn" onclick="closeSettings()">Close</button>
+        </div>
+        <div id="shopModal" style="display: none;">
+            <h2>🛒 Shop</h2>
+            <div class="settingsContent">
+                <p style="color: #00ff00; font-size: 18px; margin-bottom: 20px;">Coins: <span id="shopCoins">0</span></p>
+                <div class="shopItems" id="shopItemsContainer">
+                    <!-- Items will be dynamically inserted here -->
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                <button class="navBtn" onclick="previousShopPage()" id="prevBtn" style="display: none;">← Previous</button>
+                <span id="shopPageIndicator" style="color: #ffd700; font-weight: bold;">Page 1 of 2</span>
+                <button class="navBtn" onclick="nextShopPage()" id="nextBtn">Next →</button>
+            </div>
+            <button class="closeBtn" onclick="closeShop()">Close</button>
+        </div>
+        <div id="startScreen">
+            <h1>Space Shooter</h1>
+            <p>Use ARROW KEYS to move and SPACEBAR to shoot</p>
+            <button id="startBtn" onclick="showDifficulties()">Start Game</button>
+            <div id="difficultySelect" style="display: none; margin-top: 20px;">
+                <p>Select Difficulty:</p>
+                <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                    <button onclick="startGame('easy')">Easy</button>
+                    <button onclick="startGame('medium')">Medium</button>
+                    <button onclick="startGame('hard')">Hard</button>
+                    <button onclick="startGame('extreme')">Extreme</button>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <button onclick="toggleShop()">🛒 Shop</button>
+            </div>
+        </div>
+    </div>
+    <script src="scripts.js?v=20260801b"></script>
+</body>
+</html>
